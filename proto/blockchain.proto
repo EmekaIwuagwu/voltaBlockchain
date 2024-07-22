@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package blockchain;
+
+service BlockchainService {
+    rpc CreateAddress(CreateAddressRequest) returns (UserAddress);
+    rpc SendTokens(SendTokensRequest) returns (TransactionResponse);
+    rpc CheckBalance(CheckBalanceRequest) returns (BalanceResponse);
+    rpc CheckTransactions(CheckTransactionsRequest) returns (TransactionHistoryResponse);
+    rpc RequestLoan(RequestLoanRequest) returns (LoanResponse);
+    rpc PayBackLoan(PayBackLoanRequest) returns (LoanResponse);
+}
+
+message CreateAddressRequest {}
+
+message UserAddress {
+    string address = 1;
+    double balance = 2;
+    string uuid = 3;
+    string passkey = 4;
+}
+
+message SendTokensRequest {
+    string addressFrom = 1;
+    string addressTo = 2;
+    double amount = 3;
+    string passkey = 4;
+}
+
+message TransactionResponse {
+    string from_address = 1;
+    string to_address = 2;
+    double amount = 3;
+    string txHash = 4;  // Added txHash field
+}
+
+message CheckBalanceRequest {
+    string address = 1;
+}
+
+message BalanceResponse {
+    string address = 1;
+    double balance = 2;
+}
+
+message CheckTransactionsRequest {
+    string address = 1;
+}
+
+message Transaction {
+    string from_address = 1;
+    string to_address = 2;
+    double amount = 3;
+    string date = 4;
+}
+
+message TransactionHistoryResponse {
+    repeated Transaction transactions = 1;
+}
+
+message RequestLoanRequest {
+    string address = 1;
+    double amount = 2;
+    string reason = 3;
+}
+
+message LoanResponse {
+    string message = 1;
+    double previous_balance = 2;
+    double updated_balance = 3;
+}
+
+message PayBackLoanRequest {
+    string address = 1;
+    double amount = 2;
+}
